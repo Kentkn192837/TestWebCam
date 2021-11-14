@@ -1,19 +1,30 @@
 import numpy as np
 import cv2
 
-def main():
-    portnumber = int(input())
-    capture = cv2.VideoCapture(portnumber)
+WIDTH = 800
+HEIGHT = 600
 
-    while(True):
-        ret, frame = capture.read()
-        cv2.imshow('frame',frame)
+def run(portnumber):
+    cap = cv2.VideoCapture(portnumber)
+    if cap.isOpened() == False:
+        print("動画ファイルのパスが間違っているか、そのポートにはカメラが接続されていません")
+        return
+
+    while True:
+        ret, frame = cap.read()
+        cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('frame', WIDTH, HEIGHT)
+        cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-    capture.release()
+    cap.release()
     cv2.destroyAllWindows()
+
+def main():
+    print('カメラのポート番号を指定してください')
+    portnumber = int(input())
+    run(portnumber)
 
 if __name__ == '__main__':
     main()
-    
