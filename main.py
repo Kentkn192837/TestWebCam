@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import datetime
 
 WIDTH = 800
 HEIGHT = 600
@@ -17,6 +18,10 @@ def run(portnumber):
         cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        elif cv2.waitKey(1) & 0xFF == ord('s'):
+            dt = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%f')
+            cv2.imwrite('D:\Images\{}.jpg'.format(dt), frame)
+            print('保存先: D:\Test\{}.jpg'.format(dt), 'に保存しました')
 
     cap.release()
     cv2.destroyAllWindows()
